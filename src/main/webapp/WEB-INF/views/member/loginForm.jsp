@@ -22,10 +22,13 @@
 	</c:when>
 </c:choose>  
 </head>
+<style>
 
+</style>
 <body>
 <form name="frmLogin" method="post"  action="${contextPath}/member/login.do">
-   <table border="1"  width="80%" align="center" >
+<br><br><br><br><br>
+   <table id="loginT" border="1" background-color="gray"  width="80%" align="center" >
       <tr align="center">
          <td>아이디</td>
          <td>비밀번호</td>

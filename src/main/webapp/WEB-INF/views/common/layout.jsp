@@ -18,21 +18,21 @@
       #header {
         padding: 5px;
         margin-bottom: 5px;
-        border: 0px solid #bcbcbc;
-         background-color: lightgreen;
+        border-bottom: 2px solid #bcbcbc;
+        background-color: white;
+         
       }
       #sidebar-left {
         width: 15%;
-        height:700px;
-        padding: 5px;
+        height:420px;
+        padding: 15px 5px 15px 5px;
         margin-right: 5px;
-        margin-bottom: 5px;
+        margin-bottom: 15px;
         float: left;
-         background-color: yellow;
-        border: 0px solid #bcbcbc;
-        font-size:10px;
+        border-right: 2px solid #bcbcbc;
+        font-size:15px;
       }
-      #content {
+	      #content {
         width: 75%;
         padding: 5px;
         margin-right: 5px;
@@ -43,9 +43,18 @@
         clear: both;
         padding: 5px;
         border: 0px solid #bcbcbc;
-         background-color: lightblue;
+        background-color: #bcbcbc;
       }
-      
+     #head {
+  		text-decoration-line: none;
+  		color:black;
+  		font-size:30px;
+  		padding-bottom: 20px;
+	  }
+	  #loginT {
+		  border : 2px solid black;
+		  border-collapse : collapse;
+		};
     </style>
     <title><tiles:insertAttribute name="title" /></title>
   </head>

@@ -17,13 +17,13 @@
 <body>
 <table border=0  width="100%">
   <tr>
-     <td>
+     <td style="text-align: left;">
 		<a href="${contextPath}/main.do">
-			<img src="${contextPath}/resources/image/duke_swing.gif"  />
+			<img src="${contextPath}/resources/image/home.png"  />
 		</a>
      </td>
-     <td>
-       <h1><font size=30>스프링실습 홈페이지!!</font></h1>
+     <td style="text-align: left; margin-left: 30px; padding-left:100px;">
+       <h1><font size=30>Spring Board Project</font></h1>
      </td>
      
      <td>
@@ -31,10 +31,10 @@
        <c:choose>
           <c:when test="${isLogOn == true  && member!= null}">
             <h3>환영합니다. ${member.name }님!</h3>
-            <a href="${contextPath}/member/logout.do"><h3>로그아웃</h3></a>
+            <a id="head" href="${contextPath}/member/logout.do"><h3>로그아웃</h3></a>
           </c:when>
           <c:otherwise>
-	        <a href="${contextPath}/member/loginForm.do"><h3>로그인</h3></a>
+	        <a id="head" href="${contextPath}/member/loginForm.do"><h3>로그인</h3></a>
 	      </c:otherwise>
 	   </c:choose>     
      </td>

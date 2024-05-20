@@ -15,6 +15,18 @@
   <script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
-   <h1>메인 페이지입니다!!</h1>
+   <c:choose>
+          <c:when test="${isLogOn == true  && member!= null}">
+            <h3>환영합니다. ${member.name }님!</h3>
+             <%@ include file="member/loginForm.jsp" %> 
+          </c:when>
+          <c:otherwise>
+          <!-- 
+	        <a href="${contextPath}/member/loginForm.do"><h3>로그인</h3></a>
+           -->
+            <%@ include file="member/loginForm.jsp" %> 
+	      </c:otherwise>
+	   </c:choose> 
+	  
 </body>
 </html>

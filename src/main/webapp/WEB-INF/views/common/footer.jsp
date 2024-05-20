@@ -9,7 +9,7 @@
   <title>하단 부분</title>
   <style>
     p {
-     font-size:20px;
+     font-size:15px;
       text-align:center;
     }
   </style>

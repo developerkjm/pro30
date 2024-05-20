@@ -28,8 +28,8 @@
 	}
 </script>
 <body>
-<table align="center" border="1"  width="80%"  >
-  <tr height="10" align="center"  bgcolor="lightgreen">
+<table id="loginT" align="center" border="1"  width="80%"  >
+  <tr height="10" align="center"  bgcolor="lightgray">
      <td >글번호</td>
      <td >작성자</td>              
      <td >제목</td>
@@ -73,6 +73,6 @@
 </table>
 <!-- <a  class="cls1"  href="#"><p class="cls2">글쓰기</p></a> -->
 <a  class="cls1"  href="javascript:fn_articleForm('${isLogOn}','${contextPath}/board/articleForm.do', 
-                                                    '${contextPath}/member/loginForm.do')"><p class="cls2">글쓰기</p></a>
+                                                    '${contextPath}/member/loginForm.do')"><p class="cls2">장부작성</p></a>
 </body>
 </html>
