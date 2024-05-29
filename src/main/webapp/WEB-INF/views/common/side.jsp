@@ -36,7 +36,8 @@
     -->
 	<h1>
 		<a id="head" href="${contextPath}/member/listMembers.do"  class="no-underline">인사정보</a><br><br>
-		<a id="head" href="${contextPath}/board/listArticles.do"  class="no-underline">회비출납</a><br><br>
+		<a id="head" href="${contextPath}/board/listArticles.do"  class="no-underline">게시판</a><br><br>
+		<a id="head" href="${contextPath}/board/listFees.do"  class="no-underline">장부출납내역</a><br><br>
 		<a id="head" href="#"  class="no-underline">upload / download</a><br>
 	</h1>
 </body>

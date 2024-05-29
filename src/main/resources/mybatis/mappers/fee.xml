@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.fee">
+  <resultMap id="feesResult" type="feeVO">
+    <result property="feeNo" column="feeNo" />
+    <result property="feeMonthly" column="feeMonthly" />
+    <result property="feeRemark" column="feeRemark" />
+    <result property="feeDate" column="feeDate" />
+    <result property="feeId" column="feeId" />
+  </resultMap> 
+  
+  <resultMap id="memResult" type="memberVO">
+		<result property="id" column="id" />
+        <result property="pwd" column="pwd" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="joinDate" column="joinDate" />
+	</resultMap> 
+  
+  <resultMap id="imgResult" type="imageVO">
+	  <result property="imageFileNO" column="imageFileNO" />
+	  <result property="feeNO" column="feeNO" />
+	  <result property="imageFileName" column="imageFileName" />
+ </resultMap>
+
+  <select id="selectAllFeesList" resultMap="feesResult"   >
+    <![CDATA[
+      SELECT feeNo, feeMonthly, feeRemark, feeDate,  feeId
+      from t_fee
+      ORDER BY feeNO DESC		
+    ]]>
+  </select>
+  
+  <!-- 회원가입일이 오늘보다 이전이거나 같아야 한다. -->
+  <select id="selectNewFeesList" resultMap="feesResult"   >
+    <![CDATA[
+	  SELECT * FROM t_fee f 
+      JOIN t_member m ON m.id = f.feeid(+)
+      WHERE sysdate >= m.joinDate
+      		AND  extract(month from f.feedate) = extract(month from sysdate) 
+            OR f.feedate is null
+    ]]>
+  </select>
+  
+<!--단일이미지 추가  -->
+<!-- 다중이미지 추가하려고 주석처리함. 아래에 같은이름으로 수저한거 추가함.  
+  <insert id="insertNewArticle"  parameterType="java.util.Map">
+		<![CDATA[
+			INSERT into t_board(articleNO,  title, content, imageFileName, id)
+			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{id})
+		]]>      
+	</insert>
+-->	
+  <select id="selectNewArticleNO" resultType="int"  >
+		<![CDATA[
+			SELECT  nvl(max(articleNO), 0) + 1 from t_board		
+		]]>
+	</select>
+	
+  <select id="selectArticle" resultType="articleVO"   parameterType="int">
+    <![CDATA[
+      SELECT * from t_board
+      where articleNO = #{articleNO}		
+    ]]>
+  </select>
+  
+  <update id="updateArticle"  parameterType="java.util.Map">
+			update t_board
+			set title=#{title},	 
+			content=#{content}
+			 <if test="imageFileName!='' and imageFileName!=null">
+			  , imageFileName=#{imageFileName}
+			</if>
+			where articleNO=#{articleNO}
+	</update>
+	
+	<delete id="deleteArticle"  parameterType="int">
+    <![CDATA[
+      delete from t_board
+      where articleNO in (
+         SELECT articleNO FROM  t_board
+         START WITH articleNO = #{articleNO}
+         CONNECT BY PRIOR  articleNO = parentNO )
+    ]]>      
+  </delete>
+
+ <!--다중 이미지 추가 SQL문 -->   
+    <insert id="insertNewArticle"  parameterType="java.util.Map">
+    <![CDATA[
+      insert into t_board(articleNO, id, title, content, imageFileName)
+      values(#{articleNO}, #{id}, #{title}, #{content}, null)
+    ]]>      
+  </insert>
+
+ 
+   <insert id="insertNewImage"  parameterType="java.util.Map">
+    <foreach item="item"  collection="list"   open="INSERT ALL" 
+                  separator=" " close="SELECT * FROM DUAL" >
+      INTO t_imageFile(imageFileNO, imageFileName, articleNO, regDate)
+      VALUES (#{item.imageFileNO}, #{item.imageFileName}, #{item.articleNO}, sysdate)
+    </foreach>
+  </insert>
+ 
+  <select id="selectNewImageFileNO" resultType="int"  >
+    <![CDATA[
+      SELECT  nvl(max(imageFileNO),0) from t_imageFile		
+    ]]>
+  </select>
+	
+
+  <select  id="selectImageFileList" resultMap="imgResult" parameterType="int">
+    <![CDATA[
+      SELECT * from t_imageFile
+      where articleNO=#{articleNO}	
+    ]]>
+  </select> 
+  
+</mapper>

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.myspring.pro30.board.dao.BoardDAO;
 import com.myspring.pro30.board.vo.ArticleVO;
+import com.myspring.pro30.board.vo.FeeVO;
 import com.myspring.pro30.board.vo.ImageVO;
 
 
@@ -24,6 +25,21 @@ public class BoardServiceImpl  implements BoardService{
 		List<ArticleVO> articlesList =  boardDAO.selectAllArticlesList();
         return articlesList;
 	}
+	public List<FeeVO> listFees() throws Exception{
+		List<FeeVO> feesList =  boardDAO.selectAllFeesList();
+        return feesList;
+	}
+	
+	public List<Map<String, Object>> feeForm() {
+		List<Map<String, Object>> feeForm =  boardDAO.selectNewFeesList();
+        return feeForm;
+	}
+	/*
+	public List<FeeVO> feeForm() throws Exception{
+		List<FeeVO> feeForm =  boardDAO.selectNewFeesList();
+        return feeForm;
+	}
+	*/
 
 	/*
 	//단일이미지 업로드

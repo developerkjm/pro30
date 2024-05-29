@@ -10,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import com.myspring.pro30.board.vo.ArticleVO;
+import com.myspring.pro30.board.vo.FeeVO;
 import com.myspring.pro30.board.vo.ImageVO;
 
 
@@ -20,10 +21,22 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public List selectAllArticlesList() throws DataAccessException {
-		List<ArticleVO> articlesList = articlesList = sqlSession.selectList("mapper.board.selectAllArticlesList");
+		List<ArticleVO> articlesList = sqlSession.selectList("mapper.board.selectAllArticlesList");
 		return articlesList;
 	}
-
+	
+	@Override
+	public List selectAllFeesList() throws DataAccessException {
+		List<FeeVO> FeesList = sqlSession.selectList("mapper.fee.selectAllFeesList");
+		return FeesList;
+	}
+	
+	@Override
+	public List selectNewFeesList() 	throws DataAccessException {
+		//List<FeeVO> FeesList = sqlSession.selectList("mapper.fee.selectNewFeesList");
+		List<Map<String, Object>> FeesList = sqlSession.selectList("mapper.fee.selectNewFeesList");
+		return FeesList;
+	}
 	
 	@Override
 	public int insertNewArticle(Map articleMap) throws DataAccessException {

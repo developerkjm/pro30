@@ -51,6 +51,30 @@ public class BoardControllerImpl  implements BoardController{
 		return mav;
 		
 	}
+	
+	//출납회비 리스트 만들기
+	@Override
+	@RequestMapping(value= "/board/listFees.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView listFees(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String)request.getAttribute("viewName");
+		List feesList = boardService.listFees();
+		ModelAndView mav = new ModelAndView(viewName);
+		mav.addObject("feesList", feesList);
+		return mav;
+	}
+	
+	//출납회비 입력 form 만들기
+	@Override
+	@RequestMapping(value= "/board/feeForm.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView feeForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String)request.getAttribute("viewName");
+		List feeForm = boardService.feeForm();
+		ModelAndView mav = new ModelAndView(viewName);
+		mav.addObject("feeForm", feeForm);
+		return mav;
+	}
+	
+	
 	/*
 	 //�� �� �̹��� �۾���
 	@Override

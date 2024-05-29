@@ -31,12 +31,13 @@
 <table id="loginT" align="center" border="1"  width="80%"  >
   <tr height="10" align="center"  bgcolor="lightgray">
      <td >글번호</td>
-     <td >작성자</td>              
-     <td >제목</td>
+     <td >납부자</td>              
+     <td >납부금액</td>
+     <td >비고</td>
      <td >작성일</td>
   </tr>
 <c:choose>
-  <c:when test="${articlesList ==null }" >
+  <c:when test="${feesList ==null }" >
     <tr  height="10">
       <td colspan="4">
          <p align="center">
@@ -45,34 +46,21 @@
       </td>  
     </tr>
   </c:when>
-  <c:when test="${articlesList !=null }" >
-    <c:forEach  var="article" items="${articlesList }" varStatus="articleNum" >
+  <c:when test="${feesList !=null }" >
+    <c:forEach  var="fee" items="${feesList }" varStatus="feeNum" >
      <tr align="center">
-	<td width="5%">${articleNum.count}</td>
-	<td width="10%">${article.id }</td>
-	<td align='left'  width="35%">
-	  <span style="padding-right:30px"></span>
-	   <c:choose>
-	      <c:when test='${article.level > 1 }'>  
-	         <c:forEach begin="1" end="${article.level }" step="1">
-	              <span style="padding-left:20px"></span>    
-	         </c:forEach>
-	         <span style="font-size:12px;">[답변]</span>
-                   <a class='cls1' href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title}</a>
-	          </c:when>
-	          <c:otherwise>
-	            <a class='cls1' href="${contextPath}/board/viewArticle.do?articleNO=${article.articleNO}">${article.title }</a>
-	          </c:otherwise>
-	        </c:choose>
-	  </td>
-	  <td  width="10%">${article.writeDate}</td> 
+		<td width="5%">${feeNum.count}</td>
+		<td width="10%">${fee.feeId }</td>
+		<td width="10%">${fee.feeMonthly }</td>
+		<td width="40%">${fee.feeRemark}</td> 
+		<td width="20%">${fee.feeDate}</td>
 	</tr>
     </c:forEach>
      </c:when>
     </c:choose>
 </table>
 <!-- <a  class="cls1"  href="#"><p class="cls2">글쓰기</p></a> -->
-<a  class="cls1"  href="javascript:fn_articleForm('${isLogOn}','${contextPath}/board/articleForm.do', 
-                                                    '${contextPath}/member/loginForm.do')"><p class="cls2">새글작성</p></a>
+<a  class="cls1"  href="javascript:fn_articleForm('${isLogOn}','${contextPath}/board/feeForm.do', 
+                                                    '${contextPath}/member/loginForm.do')"><p class="cls2">장부작성</p></a>
 </body>
 </html>
