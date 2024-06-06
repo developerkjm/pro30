@@ -20,6 +20,13 @@ public class FeeVO {
 	
 	
 	private String name = new MemberVO().getName();
+	private String id = new MemberVO().getId();
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

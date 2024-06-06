@@ -45,6 +45,48 @@
     ]]>
   </select>
   
+  
+  
+  
+  
+  
+  
+   <insert id="insertFee" parameterType="java.util.Map">  
+		<![CDATA[
+		 insert into t_fee(feeNo,feeMonthly,feeRemark, feeDate, feeId)
+		 values(#{feeNo},#{feeMonthly}, #{feeRemark}, #{feeDate}, #{feeId})
+		]]>      
+  </insert>
+
+  
+  <select id="selectNewFeeNO" resultType="int"  >
+		<![CDATA[
+			SELECT  nvl(max(feeNo), 0) + 1 from t_fee		
+		]]>  
+  </select>
+  
+  
+  <update id="updateFee"  parameterType="java.util.Map">
+			update t_fee
+			set feeMonthly=#{feeMonthly},feeRemark=#{feeRemark},feeDate=#{feeDate},feeId=#{feeId} 
+			where feeNo=#{feeNo}
+	</update>
+	
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 <!--단일이미지 추가  -->
 <!-- 다중이미지 추가하려고 주석처리함. 아래에 같은이름으로 수저한거 추가함.  
   <insert id="insertNewArticle"  parameterType="java.util.Map">
@@ -54,11 +96,7 @@
 		]]>      
 	</insert>
 -->	
-  <select id="selectNewArticleNO" resultType="int"  >
-		<![CDATA[
-			SELECT  nvl(max(articleNO), 0) + 1 from t_board		
-		]]>
-	</select>
+  
 	
   <select id="selectArticle" resultType="articleVO"   parameterType="int">
     <![CDATA[

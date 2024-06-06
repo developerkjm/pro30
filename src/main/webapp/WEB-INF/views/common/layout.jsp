@@ -32,8 +32,8 @@
         border-right: 2px solid #bcbcbc;
         font-size:15px;
       }
-	      #content {
-        width: 75%;
+	  #content {
+        width: 70%;
         padding: 5px;
         margin-right: 5px;
         float: left;
@@ -41,14 +41,14 @@
       }
       #footer {
         clear: both;
-        padding: 5px;
+        padding: 1px;
         border: 0px solid #bcbcbc;
         background-color: #bcbcbc;
       }
      #head {
   		text-decoration-line: none;
   		color:black;
-  		font-size:30px;
+  		font-size:20px;
   		padding-bottom: 20px;
 	  }
 	  #loginT {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.myspring.pro30.board.vo.ArticleVO;
 import com.myspring.pro30.board.vo.FeeVO;
 import com.myspring.pro30.board.vo.ImageVO;
+import com.myspring.pro30.member.vo.MemberVO;
 
 
 @Repository("boardDAO")
@@ -33,10 +34,31 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public List selectNewFeesList() 	throws DataAccessException {
-		//List<FeeVO> FeesList = sqlSession.selectList("mapper.fee.selectNewFeesList");
 		List<Map<String, Object>> FeesList = sqlSession.selectList("mapper.fee.selectNewFeesList");
 		return FeesList;
 	}
+	
+	@Override
+	public int insertFee(Map feeMap) throws DataAccessException {
+		int feeNo = selectNewFeeNo();
+		feeMap.put("feeNo", feeNo);
+		System.out.println("feeMap값은?"+feeMap);
+		sqlSession.insert("mapper.fee.insertFee", feeMap);
+		return feeNo;
+	}
+	
+	
+	
+	@Override
+	public void updateFee(Map feeMap) throws DataAccessException {
+		sqlSession.insert("mapper.fee.updateFee", feeMap);
+	}
+	
+	
+	private int selectNewFeeNo() throws DataAccessException {
+		return sqlSession.selectOne("mapper.fee.selectNewFeeNO");
+	}
+	
 	
 	@Override
 	public int insertNewArticle(Map articleMap) throws DataAccessException {

@@ -13,6 +13,9 @@
  <style>
    .cls1 {text-decoration:none;}
    .cls2{text-align:center; font-size:30px;}
+   @media print {
+		#header, #footer, #sidebar-left, .no-print, a { display:none }
+	}
   </style>
   <meta charset="UTF-8">
   <title>글목록창</title>
@@ -57,9 +60,14 @@
 	</tr>
     </c:forEach>
      </c:when>
+    
     </c:choose>
+     <tr>
+     	<td class="no-print" colspan=5><input class="no-print" type="button" value="인쇄하기" id="print" onclick="window.print()"/></td>
+     </tr>
 </table>
 <!-- <a  class="cls1"  href="#"><p class="cls2">글쓰기</p></a> -->
+
 <a  class="cls1"  href="javascript:fn_articleForm('${isLogOn}','${contextPath}/board/feeForm.do', 
                                                     '${contextPath}/member/loginForm.do')"><p class="cls2">장부작성</p></a>
 </body>

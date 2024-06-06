@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import com.myspring.pro30.board.dao.BoardDAO;
 import com.myspring.pro30.board.vo.ArticleVO;
 import com.myspring.pro30.board.vo.FeeVO;
 import com.myspring.pro30.board.vo.ImageVO;
+import com.myspring.pro30.member.vo.MemberVO;
 
 
 @Service("boardService")
@@ -34,12 +36,19 @@ public class BoardServiceImpl  implements BoardService{
 		List<Map<String, Object>> feeForm =  boardDAO.selectNewFeesList();
         return feeForm;
 	}
-	/*
-	public List<FeeVO> feeForm() throws Exception{
-		List<FeeVO> feeForm =  boardDAO.selectNewFeesList();
-        return feeForm;
+	
+	@Override
+	public int addNewFee(Map feeMap) throws DataAccessException {
+		return boardDAO.insertFee(feeMap);
 	}
-	*/
+	
+	@Override
+	public void updateFee(Map feeMap) throws DataAccessException {
+		boardDAO.updateFee(feeMap);
+	}
+
+	
+	
 
 	/*
 	//단일이미지 업로드

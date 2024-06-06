@@ -19,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.myspring.pro30.board.service.BoardService;
 import com.myspring.pro30.board.vo.ArticleVO;
+import com.myspring.pro30.board.vo.FeeVO;
 import com.myspring.pro30.board.vo.ImageVO;
 import com.myspring.pro30.member.vo.MemberVO;
 
@@ -40,6 +42,8 @@ public class BoardControllerImpl  implements BoardController{
 	private BoardService boardService;
 	@Autowired
 	private ArticleVO articleVO;
+	@Autowired
+	private FeeVO feeVO;
 	
 	@Override
 	@RequestMapping(value= "/board/listArticles.do", method = {RequestMethod.GET, RequestMethod.POST})
@@ -75,8 +79,114 @@ public class BoardControllerImpl  implements BoardController{
 	}
 	
 	
+	
+	
+	//출납 장부 입력 저장버튼
+		@Override
+		@RequestMapping(value="/board/addNewFee2.do" ,method = RequestMethod.POST)
+		public ModelAndView addNewFee2(HttpServletRequest multipartRequest, 
+					HttpServletResponse response) throws Exception {
+
+			multipartRequest.setCharacterEncoding("utf-8");
+			Map<String,Object> feeMap = new HashMap<String, Object>();
+			Enumeration enu=multipartRequest.getParameterNames();
+			
+			String fNoSt = multipartRequest.getParameter("feeNo");
+			int fNo = Integer.parseInt(fNoSt);
+			
+			
+			String message;
+			ModelAndView mav=null;
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+			if(fNo == 0) {
+				while(enu.hasMoreElements()){
+					String feeId=(String)enu.nextElement();
+					String value=multipartRequest.getParameter(feeId);
+					System.out.println("Controller feeNo 없을 때 : "+feeId+" : "+value);
+					feeMap.put(feeId,value);
+				}
+				int feeNO = boardService.addNewFee(feeMap);
+			
+				mav = new ModelAndView("redirect:/board/feeForm.do");
+			} else {
+				//번호가 있으면 update 해야 함.
+				while(enu.hasMoreElements()){
+					String feeId=(String)enu.nextElement();
+					String value=multipartRequest.getParameter(feeId);
+					System.out.println("Controller feeNo 있!을! 때 : "+feeId+" : "+value);
+					feeMap.put(feeId,value);
+				}
+				String feeNo =(String) feeMap.get("feeNo");
+				boardService.updateFee(feeMap);
+				mav = new ModelAndView("redirect:/board/feeForm.do");
+			}
+			return mav;
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//출납 장부 입력 저장버튼
+	@Override
+	@RequestMapping(value="/board/addNewFee.do" ,method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity addNewFee(MultipartHttpServletRequest multipartRequest, 
+				HttpServletResponse response) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		
+		Map<String,Object> feeMap = new HashMap<String, Object>();
+		Enumeration enu=multipartRequest.getParameterNames();
+		System.out.println("Controller___enu : "+enu);
+		while(enu.hasMoreElements()){
+			String feeId=(String)enu.nextElement();
+			String value=multipartRequest.getParameter(feeId);
+			System.out.println("Controller___enu 222222222 : "+feeId+" : "+value);
+			feeMap.put(feeId,value);
+		}
+		String message;
+		ResponseEntity resEnt=null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			int feeNO = boardService.addNewFee(feeMap);
+			
+			message = "<script>";
+			message += " alert('장부가 저장됨..');";
+			message += " location.href='"+multipartRequest.getContextPath()+"/board/listFees.do'; ";
+			message +=" </script>";
+		    resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		}catch(Exception e) {
+			message = " <script>";
+			message +=" alert('실패!');');";
+			message +=" location.href='"+multipartRequest.getContextPath()+"/board/feeForm.do'; ";
+			message +=" </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
+	
 	/*
-	 //�� �� �̹��� �۾���
+	 // 단일 이미지 업로드
 	@Override
 	@RequestMapping(value="/board/addNewArticle.do" ,method = RequestMethod.POST)
 	@ResponseBody
