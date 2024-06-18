@@ -44,10 +44,11 @@
       <tr align="center">
          <td colspan="2">
             <input type="submit" value="로그인" > 
-            <input type="reset"  value="다시입력" > 
+            <input type="reset"  value="다시입력" >
          </td>
       </tr>
    </table>
+   <a  href="${contextPath}/member/memberForm.do"><h1 style="text-align:center">회원가입</h1></a>
 </form>
 </body>
 </html>

@@ -1,3 +1,8 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.myspring.pro30.member.vo.MemberVO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" 
     isELIgnored="false"  %>
@@ -18,18 +23,39 @@
      text-align:center;
    }
 </style>
+<c:choose>
+	<c:when test="${result=='modFailed' }">
+	  <script>
+	    window.onload=function(){
+	      alert("그런 아이디는 없다.");
+	    }
+	  </script>
+	</c:when>
+</c:choose> 
+
+
 </head>
 <body>
 	<form method="post"   action="${contextPath}/member/modMember.do">
 	<h1  class="text_center">회원 정보 수정창</h1>
+	
+	<c:forEach var="data" items="${memberMap }">
+	${data } __
+	</c:forEach>
+	
+		
+	
+	
 	<table  align="center">
 	   <tr>
 	      <td width="200"><p align="right">아이디</td>
-	      <td width="400"><input type="text" name="id"></td>
+	      <td width="400"><input type="text" value="${memberMap.id}"></td>
 	   </tr>
 	   <tr>
 	      <td width="200"><p align="right">비밀번호</td>
-	      <td width="400"><input type="password" name="pwd"></td>
+	      <td width="400"><input type="password" name="pwd">
+	      
+	</td>
 	    </tr>
 	    <tr>
 	       <td width="200"><p align="right">이름</td>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import com.myspring.pro30.board.vo.ArticleVO;
 import com.myspring.pro30.member.vo.MemberVO;
 
 
@@ -25,6 +26,24 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int insertMember(MemberVO memberVO) throws DataAccessException {
 		int result = sqlSession.insert("mapper.member.insertMember", memberVO);
+		return result;
+	}
+	
+	@Override
+	public MemberVO searchById(MemberVO memberVO) throws DataAccessException{
+		  MemberVO vo = sqlSession.selectOne("mapper.member.searchById",memberVO);
+		return vo;
+	}
+	
+	@Override
+	public MemberVO selectMember(String id) throws DataAccessException {
+		return sqlSession.selectOne("mapper.member.selectMember", id);
+	}
+
+	
+	@Override
+	public int updateMember(MemberVO memberVO) throws DataAccessException {
+		int result = sqlSession.update("mapper.member.updateMember", memberVO);
 		return result;
 	}
 

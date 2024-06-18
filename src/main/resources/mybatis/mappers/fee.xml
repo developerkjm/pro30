@@ -34,7 +34,6 @@
     ]]>
   </select>
   
-  <!-- 회원가입일이 오늘보다 이전이거나 같아야 한다. -->
   <select id="selectNewFeesList" resultMap="feesResult"   >
     <![CDATA[
 	  SELECT * FROM t_fee f 

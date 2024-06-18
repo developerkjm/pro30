@@ -23,7 +23,7 @@
 		</a>
      </td>
      <td style="text-align: left; margin-left: 30px; padding-left:100px;">
-       <h1><font size=30>Spring Board Project</font></h1>
+       <h1><font size=30>모임 게시판</font></h1>
      </td>
      
      <td>

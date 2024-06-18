@@ -1,6 +1,8 @@
 package com.myspring.pro30.member.controller;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +51,7 @@ public class MemberControllerImpl   implements MemberController {
 		mav.addObject("membersList", membersList);
 		return mav;
 	}
-
+	/*
 	@Override
 	@RequestMapping(value="/member/addMember.do" ,method = RequestMethod.POST)
 	public ModelAndView addMember(@ModelAttribute("member") MemberVO member,
@@ -61,6 +63,94 @@ public class MemberControllerImpl   implements MemberController {
 		ModelAndView mav = new ModelAndView("redirect:/member/listMembers.do");
 		return mav;
 	}
+	*/
+	
+	
+	
+	
+	@Override
+	@RequestMapping(value="/member/addMember.do" ,method = RequestMethod.POST)
+	public ModelAndView addMember(@ModelAttribute("member") MemberVO member,
+							RedirectAttributes rAttr,
+			                  HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("html/text;charset=utf-8");
+		ModelAndView mav = new ModelAndView();
+		memberVO = memberService.searchId(member);
+		if(memberVO != null) {
+			int result = 0;
+			result = memberService.addMember(member);
+			mav.setViewName("redirect:/member/listMembers.do");
+		} else {
+			rAttr.addAttribute("result", "addFailed");
+			mav.setViewName("redirect:/member/memberForm.do");
+		}
+		return mav;
+	}
+	
+	
+	
+	
+	@Override
+	@RequestMapping(value="/member/modMember.do" ,method = RequestMethod.POST)
+	public ModelAndView updateMember(@ModelAttribute("member") MemberVO member,
+							RedirectAttributes rAttr,
+			                  HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("html/text;charset=utf-8");
+		ModelAndView mav = new ModelAndView();
+		memberVO = memberService.searchId(member);
+		if(memberVO != null) {
+			//전달된 id와 같은 것이 있으면 그것을 update하라!
+			System.out.println("update not null" + memberVO);
+			int result = 0;
+			result = memberService.updateMember(member);
+			mav.setViewName("redirect:/member/listMembers.do");
+		} else {
+			System.out.println("update null" + memberVO);
+			rAttr.addAttribute("result", "modFailed");
+			mav.setViewName("redirect:/member/listMembers.do");
+		}
+		return mav;
+	}
+	
+	//다중 이미지 업로드 시 화면
+	@RequestMapping(value="/member/modMember.do" ,method = RequestMethod.GET)
+	public ModelAndView viewMember(@RequestParam("id") String id,
+			  HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String viewName = (String)request.getAttribute("viewName");
+		System.out.println("수정화면 멤버 보여주는 viewName : "+viewName);
+		Map memberMap=memberService.viewMember(id);
+		System.out.println("수정화면 멤버 보여주는 memberMap : "+memberMap);
+		
+		//Iterator<String> mapNames = memberMap.entrySet().iterator();
+		/*
+		Iterator<String> mapNames = (Iterator<String>) request.getAttributeNames();
+		while (mapNames.hasNext()) {
+			String names = mapNames.next();
+			System.out.println("Map 이름들을 뽑아보자."+names);
+
+		}
+		*/
+		
+		ModelAndView mav = new ModelAndView();
+		System.out.println("수정화면 멤버 보여주는 mav : "+mav);
+		mav.setViewName(viewName);
+		//mav.setViewName("redirect:/member/modMember.do");
+		mav.addObject("memberMap", memberMap);
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@Override
 	@RequestMapping(value="/member/removeMember.do" ,method = RequestMethod.GET)
@@ -71,17 +161,19 @@ public class MemberControllerImpl   implements MemberController {
 		ModelAndView mav = new ModelAndView("redirect:/member/listMembers.do");
 		return mav;
 	}
+	
 	/*
 	@RequestMapping(value = { "/member/loginForm.do", "/member/memberForm.do" }, method =  RequestMethod.GET)
 	@RequestMapping(value = "/member/*Form.do", method =  RequestMethod.GET)
 	public ModelAndView form(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		ModelAndView mav = new ModelAndView();
+		System.out.println("mav : " + mav);
 		mav.setViewName(viewName);
+		System.out.println("mav22 : " + mav);
 		return mav;
 	}
 	*/
-	
 	@Override
 	@RequestMapping(value = "/member/login.do", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("member") MemberVO member,
@@ -126,6 +218,9 @@ public class MemberControllerImpl   implements MemberController {
 						       HttpServletRequest request, 
 						       HttpServletResponse response) throws Exception {
 		String viewName = (String)request.getAttribute("viewName");
+		if(viewName == "/member/memberForm") {
+			System.out.println("memberForm!!!!!!!!");
+		}
 		HttpSession session = request.getSession();
 		session.setAttribute("action", action);  
 		ModelAndView mav = new ModelAndView();

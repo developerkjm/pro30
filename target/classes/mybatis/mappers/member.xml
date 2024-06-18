@@ -11,14 +11,7 @@
         <result property="email" column="email" />
         <result property="joinDate" column="joinDate" />
 	</resultMap> 
-	<!-- 
-	<resultMap id="memResult" type="java.util.HashMap">
-      <result property="id" column="id" />
-      <result property="pwd" column="pwd" />
-      <result property="name" column="name" />
-      <result property="email" column="email" />
-      <result property="joinDate" column="joinDate" />
-   </resultMap> -->
+
 
 
 	<select id="selectAllMemberList" resultMap="memResult">
@@ -34,6 +27,14 @@
 		]]>      
 	</insert>
 	
+   <select id="selectMember" resultType="memberVO"   parameterType="String">
+    <![CDATA[
+      select * from t_member
+      where
+	   id=#{id}
+    ]]>
+  </select>
+  
    
    <update id="updateMember"  parameterType="memberVO">
      <![CDATA[
@@ -56,5 +57,10 @@
 		select * from t_member	
 		where id=#{id} and pwd=#{pwd}		
 	]]>
+  </select>
+  
+  <select id="searchById" resultType="memberVO" parameterType="memberVO" >
+  		select decode(count(*),1,'true','false') as result from t_member
+		where id=#{id}
   </select>
 </mapper>

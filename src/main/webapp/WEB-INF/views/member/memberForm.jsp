@@ -17,6 +17,16 @@
      text-align:center;
    }
 </style>
+<c:choose>
+	<c:when test="${result=='addFailed' }">
+	  <script>
+	    window.onload=function(){
+	      alert("중복된 아이디 입니다.");
+	    }
+	  </script>
+	</c:when>
+</c:choose>  
+
 </head>
 <body>
 	<form method="post"   action="${contextPath}/member/addMember.do">
