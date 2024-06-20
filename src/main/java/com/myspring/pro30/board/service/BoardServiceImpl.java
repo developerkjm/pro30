@@ -50,14 +50,13 @@ public class BoardServiceImpl  implements BoardService{
 	
 	
 
-	/*
 	//단일이미지 업로드
 	@Override
 	public int addNewArticle(Map articleMap) throws Exception{
 		return boardDAO.insertNewArticle(articleMap);
 	}
-	*/
 	//다중 이미지 업로드
+	/*
 	@Override
 	public int addNewArticle(Map articleMap) throws Exception{
 		int articleNO = boardDAO.insertNewArticle(articleMap);
@@ -65,7 +64,9 @@ public class BoardServiceImpl  implements BoardService{
 		boardDAO.insertNewImage(articleMap);
 		return articleNO;
 	}
+	*/
 	//다중 이미지 화면
+	/*
 	@Override
 	public Map viewArticle(int articleNO) throws Exception {
 		Map articleMap = new HashMap();
@@ -75,16 +76,14 @@ public class BoardServiceImpl  implements BoardService{
 		articleMap.put("imageFileList", imageFileList);
 		return articleMap;
 	}
-	
+	*/
 	
 	 //단일 이미지 화면
-	/*
 	@Override
 	public ArticleVO viewArticle(int articleNO) throws Exception {
 		ArticleVO articleVO = boardDAO.selectArticle(articleNO);
 		return articleVO;
 	}
-	*/
 	
 	@Override
 	public void modArticle(Map articleMap) throws Exception {

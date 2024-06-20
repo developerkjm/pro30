@@ -31,14 +31,12 @@
   </select>
   
 <!--단일이미지 추가  -->
-<!-- 다중이미지 추가하려고 주석처리함. 아래에 같은이름으로 수저한거 추가함.  
   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
 			INSERT into t_board(articleNO,  title, content, imageFileName, id)
 			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{id})
 		]]>      
 	</insert>
--->	
   <select id="selectNewArticleNO" resultType="int"  >
 		<![CDATA[
 			SELECT  nvl(max(articleNO), 0) + 1 from t_board		
@@ -72,14 +70,15 @@
     ]]>      
   </delete>
 
- <!--다중 이미지 추가 SQL문 -->   
+ <!--다중 이미지 추가 SQL문 -->
+ <!-- 다중 이미지 추가시 에러로 없애고 단일 이미지로 대체함.    
     <insert id="insertNewArticle"  parameterType="java.util.Map">
     <![CDATA[
       insert into t_board(articleNO, id, title, content, imageFileName)
       values(#{articleNO}, #{id}, #{title}, #{content}, null)
     ]]>      
   </insert>
-
+ -->
  
    <insert id="insertNewImage"  parameterType="java.util.Map">
     <foreach item="item"  collection="list"   open="INSERT ALL" 

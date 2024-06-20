@@ -11,7 +11,11 @@ public interface MemberService {
 	 public List listMembers() throws DataAccessException;
 	 public int addMember(MemberVO memberVO) throws DataAccessException;
 	 public int updateMember(MemberVO memberVO) throws DataAccessException;
-	 public Map viewMember(String id) throws Exception;
+
+	 
+	 //public Map viewMember(String id) throws Exception;
+	 public List<Map<String, Object>> viewMember(String id) throws Exception;
+	 
 	 
 	 public int removeMember(String id) throws DataAccessException;
 	 public MemberVO login(MemberVO memberVO) throws Exception;

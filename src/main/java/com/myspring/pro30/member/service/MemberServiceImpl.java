@@ -36,13 +36,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Map viewMember(String id) throws Exception {
+	public List<Map<String, Object>> viewMember(String id) throws Exception {
 		System.out.println("view member id?? : "+id);
-		Map memberMap = new HashMap();
-		MemberVO memberVO = memberDAO.selectMember(id);
-		System.out.println("view memberVO?? : "+memberVO);
-		memberMap.put("member", memberVO);
-		return memberMap;
+		List<Map<String, Object>> viewMember = memberDAO.selectMember(id);
+		System.out.println("view memberVO?? : "+viewMember);
+		return viewMember;
 	}
 	
 	
@@ -54,6 +52,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO searchId(MemberVO memberVO) throws Exception{
+		System.out.println("Service of searchId ? "+ memberDAO.searchById(memberVO));
+		
 		return memberDAO.searchById(memberVO);
 	}
 	

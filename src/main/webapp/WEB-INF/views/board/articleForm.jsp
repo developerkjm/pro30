@@ -50,17 +50,17 @@
 		 </tr>
 	 		<tr>
 				<td align="right" valign="top"><br>글내용: </td>
-				<td colspan=2><textarea name="content" rows="10" cols="65" maxlength="4000"></textarea> </td>
+				<td colspan=2><textarea name="content" rows="5" cols="65" maxlength="4000"></textarea> </td>
      </tr>
      <tr>
 			  <td align="right">이미지파일 첨부:  </td>
 			  <td> <input type="file" name="imageFileName"  onchange="readURL(this);" /></td>
 			  <td><img  id="preview" src="#"   width=200 height=200/></td>
 			  
-			  
+			  <!-- 다중 이미지 첨부기능 없애므로 이것도 필요 없음.
 			  <td align="right">이미지파일 첨부</td>
 				<td align="left"> <input type="button" value="파일 추가" onClick="fn_addFile()"/></td>
-				
+				 -->
 				
 	   </tr>
 	   <tr>

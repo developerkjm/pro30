@@ -1,5 +1,6 @@
 package com.myspring.pro30.member.controller;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,20 +56,6 @@ public class MemberControllerImpl   implements MemberController {
 		mav.addObject("membersList", membersList);
 		return mav;
 	}
-	/*
-	@Override
-	@RequestMapping(value="/member/addMember.do" ,method = RequestMethod.POST)
-	public ModelAndView addMember(@ModelAttribute("member") MemberVO member,
-			                  HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("html/text;charset=utf-8");
-		int result = 0;
-		result = memberService.addMember(member);
-		ModelAndView mav = new ModelAndView("redirect:/member/listMembers.do");
-		return mav;
-	}
-	*/
-	
 	
 	
 	
@@ -88,68 +79,51 @@ public class MemberControllerImpl   implements MemberController {
 		return mav;
 	}
 	
-	
-	
-	
 	@Override
 	@RequestMapping(value="/member/modMember.do" ,method = RequestMethod.POST)
-	public ModelAndView updateMember(@ModelAttribute("member") MemberVO member,
+	public ResponseEntity updateMember(@ModelAttribute("member") MemberVO member,
 							RedirectAttributes rAttr,
 			                  HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("html/text;charset=utf-8");
-		ModelAndView mav = new ModelAndView();
-		memberVO = memberService.searchId(member);
-		if(memberVO != null) {
-			//전달된 id와 같은 것이 있으면 그것을 update하라!
-			System.out.println("update not null" + memberVO);
-			int result = 0;
-			result = memberService.updateMember(member);
-			mav.setViewName("redirect:/member/listMembers.do");
-		} else {
-			System.out.println("update null" + memberVO);
-			rAttr.addAttribute("result", "modFailed");
-			mav.setViewName("redirect:/member/listMembers.do");
-		}
+		
+			String id=(String)member.getId();
+			System.out.println("controller getId() ??" + id);
+			String message;
+			ResponseEntity mav=null;
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		    
+		    try {
+		    	memberService.updateMember(member);
+		       
+		       message = "<script>";
+			   message += " alert('수정완료.');";
+			   message += " location.href='"+request.getContextPath()+"/member/listMembers.do?id="+id+"';";
+			   message +=" </script>";
+			   mav = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		    }catch(Exception e) {
+		      message = "<script>";
+			  message += " alert('에러! 수정불가!');";
+			  message += " location.href='"+request.getContextPath()+"/member/listMembers.do?id="+id+"';";
+			  message +=" </script>";
+			  mav = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		    }
 		return mav;
 	}
 	
-	//다중 이미지 업로드 시 화면
+	
+	@Override
 	@RequestMapping(value="/member/modMember.do" ,method = RequestMethod.GET)
 	public ModelAndView viewMember(@RequestParam("id") String id,
 			  HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String viewName = (String)request.getAttribute("viewName");
-		System.out.println("수정화면 멤버 보여주는 viewName : "+viewName);
-		Map memberMap=memberService.viewMember(id);
-		System.out.println("수정화면 멤버 보여주는 memberMap : "+memberMap);
-		
-		//Iterator<String> mapNames = memberMap.entrySet().iterator();
-		/*
-		Iterator<String> mapNames = (Iterator<String>) request.getAttributeNames();
-		while (mapNames.hasNext()) {
-			String names = mapNames.next();
-			System.out.println("Map 이름들을 뽑아보자."+names);
-
-		}
-		*/
-		
+		List viewMember = memberService.viewMember(id);
 		ModelAndView mav = new ModelAndView();
-		System.out.println("수정화면 멤버 보여주는 mav : "+mav);
 		mav.setViewName(viewName);
-		//mav.setViewName("redirect:/member/modMember.do");
-		mav.addObject("memberMap", memberMap);
+		mav.addObject("memberMap", viewMember);
 		return mav;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	@Override

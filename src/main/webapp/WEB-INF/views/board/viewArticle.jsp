@@ -4,9 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+<%-- 
 <c:set var="article"  value="${articleMap.article}"  />
 <c:set var="imageFileList"  value="${articleMap.imageFileList}"  />
 
+ --%>
 <%
   request.setCharacterEncoding("UTF-8");
 %> 
@@ -117,9 +119,10 @@
       내용
    </td>
    <td>
-    <textarea rows="20" cols="60"  name="content"  id="i_content"  disabled />${article.content }</textarea>
+    <textarea rows="5" cols="45"  name="content"  id="i_content"  disabled />${article.content }</textarea>
    </td>  
   </tr>
+ <%-- 
  <c:if test="${not empty imageFileList && imageFileList!='null' }">
 	  <c:forEach var="item" items="${imageFileList}" varStatus="status" >
 		    <tr>
@@ -138,6 +141,7 @@
 			 </tr>
 		</c:forEach>
  </c:if>
+ 	 --%>    
  	 
   <c:choose> 
 	  <c:when test="${not empty article.imageFileName && article.imageFileName!='null' }">

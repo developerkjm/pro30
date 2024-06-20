@@ -9,6 +9,8 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
+
+
 <%
   request.setCharacterEncoding("UTF-8");
 %>    
@@ -39,9 +41,6 @@
 	<form method="post"   action="${contextPath}/member/modMember.do">
 	<h1  class="text_center">회원 정보 수정창</h1>
 	
-	<c:forEach var="data" items="${memberMap }">
-	${data } __
-	</c:forEach>
 	
 		
 	
@@ -49,21 +48,36 @@
 	<table  align="center">
 	   <tr>
 	      <td width="200"><p align="right">아이디</td>
-	      <td width="400"><input type="text" value="${memberMap.id}"></td>
+	      <td width="400">
+  			<c:forEach var="member" items="${memberMap }">
+		      	<input type="text" value="${member.id }" disabled />
+		      	<input type="hidden" name="id" value="${member.id}"  />
+			</c:forEach>
+	      </td>
 	   </tr>
 	   <tr>
 	      <td width="200"><p align="right">비밀번호</td>
-	      <td width="400"><input type="password" name="pwd">
-	      
-	</td>
+	      <td width="400">
+	      	<c:forEach var="member" items="${memberMap }">
+		      	<input type="password" name="pwd" value="${member.pwd}">
+			</c:forEach>
+		  </td>
 	    </tr>
 	    <tr>
 	       <td width="200"><p align="right">이름</td>
-	       <td width="400"><p><input type="text" name="name"></td>
+	       <td width="400"><p>
+	       	 <c:forEach var="member" items="${memberMap }">
+	       	 	<input type="text" name="name" value="${member.name }">
+			 </c:forEach>
+	       	</td>
 	    </tr>
 	    <tr>
 	       <td width="200"><p align="right">이메일</td>
-	       <td width="400"><p><input type="text" name="email"></td>
+	       <td width="400"><p>
+	         <c:forEach var="member" items="${memberMap }">
+	       	 	<input type="text" name="email" value="${member.email }">
+	       	 </c:forEach>
+	       </td>
 	    </tr>
 	    <tr>
 	       <td width="200"><p>&nbsp;</p></td>

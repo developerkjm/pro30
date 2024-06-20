@@ -14,14 +14,22 @@ public interface BoardService {
 	public List<FeeVO> listFees() throws Exception;
 	public List<Map<String, Object>> feeForm() throws Exception;
 	
+	
+	public int addNewArticle(Map articleMap) throws Exception;
+	//public ArticleVO viewArticle(int articleNO) throws Exception;
+	
+	public ArticleVO viewArticle(int articleNO) throws Exception;
+	//public Map viewArticle(int articleNO) throws Exception;
+	
+	
+	
+	public void modArticle(Map articleMap) throws Exception;
+	public void removeArticle(int articleNO) throws Exception;
+	
+	
+	
 	//public int addNewFee(FeeVO feeVO) throws DataAccessException;
 	public int addNewFee(Map feeMap) throws DataAccessException;
 	public void updateFee(Map feeMap) throws DataAccessException;
 	
-	
-	public int addNewArticle(Map articleMap) throws Exception;
-	//public ArticleVO viewArticle(int articleNO) throws Exception;
-	public Map viewArticle(int articleNO) throws Exception;
-	public void modArticle(Map articleMap) throws Exception;
-	public void removeArticle(int articleNO) throws Exception;
 }

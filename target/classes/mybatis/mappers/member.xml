@@ -27,7 +27,10 @@
 		]]>      
 	</insert>
 	
+	<!-- 
    <select id="selectMember" resultType="memberVO"   parameterType="String">
+    -->
+    <select id="selectMember" resultMap="memResult"   parameterType="String">
     <![CDATA[
       select * from t_member
       where
