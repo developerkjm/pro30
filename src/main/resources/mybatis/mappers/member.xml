@@ -66,4 +66,25 @@
   		select decode(count(*),1,'true','false') as result from t_member
 		where id=#{id}
   </select>
+  
+  <select id="selectMemberSearch" resultType="String" parameterType="String">
+  	<![CDATA[
+  		select * from t_member
+			where name  like '%' || #{searchWord} || '%'
+			OR
+			id  like '%' || #{searchWord} || '%'
+			OR
+			email like '%' || #{searchWord} || '%'
+			OR
+			joindate like '%' || #{searchWord} || '%'
+  	
+  	]]>
+  </select>
+  
+  
+  
+  
+  
+  
+  
 </mapper>

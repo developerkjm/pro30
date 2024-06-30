@@ -1,5 +1,6 @@
 package com.myspring.pro30.member.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,12 +39,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
-	//public MemberVO selectMember(String id) throws DataAccessException {
-	//	return sqlSession.selectOne("mapper.member.selectMember", id);
-	//}
 	public List selectMember(String id) throws DataAccessException {
 		System.out.println("MemberDAOImple의 id? : "+id);
-		//List<Map<String, Object>> viewMemberList = sqlSession.selectOne("mapper.member.selectMember", id);
 		List<Map<String, Object>> viewMemberList = sqlSession.selectList("mapper.member.selectMember", id);
 		return viewMemberList;
 	}
@@ -63,8 +60,14 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	@Override
 	public MemberVO loginById(MemberVO memberVO) throws DataAccessException{
-		  MemberVO vo = sqlSession.selectOne("mapper.member.loginById",memberVO);
-		return vo;
+		 MemberVO vo = sqlSession.selectOne("mapper.member.loginById",memberVO);
+		 return vo;
+	}
+	
+	@Override
+	public List<String> selectMemberSearch(String keyword) throws DataAccessException {
+		List<String> list = (ArrayList)sqlSession.selectList("mapper.member.selectMemberSearch", keyword);
+		return list;
 	}
 
 }

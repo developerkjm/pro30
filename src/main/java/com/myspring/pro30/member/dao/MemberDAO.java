@@ -12,11 +12,10 @@ public interface MemberDAO {
 	 public List selectAllMemberList() throws DataAccessException;
 	 public int insertMember(MemberVO memberVO) throws DataAccessException ;
 	 public int updateMember(MemberVO memberVO) throws DataAccessException ;
-	 
-	 //public MemberVO selectMember(String id) throws DataAccessException;
 	 public List selectMember(String id) throws DataAccessException;
-	 
 	 public int deleteMember(String id) throws DataAccessException;
 	 public MemberVO loginById(MemberVO memberVO) throws DataAccessException;
 	 public MemberVO searchById(MemberVO memberVO) throws DataAccessException;
+	 
+	 public List<String> selectMemberSearch(String keyword) throws DataAccessException;
 }

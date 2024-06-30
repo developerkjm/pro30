@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.myspring.pro30.member.service.MemberService;
 import com.myspring.pro30.member.vo.MemberVO;
+
+import net.sf.json.JSONObject;
 
 
 
@@ -50,7 +53,8 @@ public class MemberControllerImpl   implements MemberController {
 	public ModelAndView listMembers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("html/text;charset=utf-8");
-		String viewName = (String)request.getAttribute("viewName");
+		
+		String viewName = (String)request.getAttribute("viewName"); 
 		List membersList = memberService.listMembers();
 		ModelAndView mav = new ModelAndView(viewName);
 		mav.addObject("membersList", membersList);
@@ -185,7 +189,29 @@ public class MemberControllerImpl   implements MemberController {
 		mav.setViewName("redirect:/member/listMembers.do");
 		return mav;
 	}	
-
+	
+	
+	
+	//회원검색창
+	@RequestMapping(value="/member/memberSearch.do", method = RequestMethod.GET,
+			produces ="application/text; charset=utf8")
+	public @ResponseBody String memberSearch(@RequestParam("keyword") String keyword,
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		if(keyword == null || keyword.equals(""))
+			return null;
+		//keyword = keyword.toUpperCase(); //uppercase 이용해서 대문자로 변환하니까 id, email이 검색이 안됨.
+		List keywordList = memberService.memberSearch(keyword);
+		//이름 한개밖에 안나옴. 여기서 가공해서 보낼 수 없는가?
+		
+		
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("keyword", keywordList);
+		String jsonInfo = jsonObject.toString();
+		return jsonInfo;
+	}
+	
 	@RequestMapping(value = "/member/*Form.do", method =  RequestMethod.GET)
 	private ModelAndView form(@RequestParam(value= "result", required=false) String result,
 							  @RequestParam(value= "action", required=false) String action,

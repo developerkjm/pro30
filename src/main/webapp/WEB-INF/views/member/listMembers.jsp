@@ -24,6 +24,7 @@
   	<h1>로그인 후 이용 바랍니다.</h1>
   </c:when>
   <c:when test="${member.id !=null }" >
+  
  	<table id="loginT" border="1"  align="center"  width="80%">
 	    <tr align="center"   bgcolor="lightgray">
 	      <td ><b>아이디</b></td>
@@ -40,15 +41,6 @@
 	      <td>${member.name}</td>
 	      <td>${member.email}</td>
 	      <td>${member.joinDate}</td>
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
 	      <td>
 	      	<a href="${contextPath}/member/modMember.do?id=${member.id}">수정</a>
 	      	<a href="${contextPath}/member/removeMember.do?id=${member.id }">삭제</a>

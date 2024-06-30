@@ -66,5 +66,10 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO login(MemberVO memberVO) throws Exception{
 		return memberDAO.loginById(memberVO);
 	}
+	
+	public List<String> memberSearch(String keyword) throws Exception {
+		List<String> list=memberDAO.selectMemberSearch(keyword);
+		return list;
+	}
 
 }
